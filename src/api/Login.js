@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
-import { ColorModeContext } from "../ThemeContext";
 
 import {
   Container,
@@ -20,7 +19,6 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const auth = useContext(AuthContext);
-  const colorMode = useContext(ColorModeContext);
   const navigate = useNavigate();
   const location = useLocation();
   const from = (location.state && location.state.from) || "/";
@@ -42,9 +40,7 @@ export default function Login() {
         <Paper elevation={3} sx={{ p: 4 }}>
           <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
             <Typography variant="h5">Вход в систему</Typography>
-            <Button onClick={colorMode.toggleColorMode} variant="outlined">
-              Переключить тему
-            </Button>
+            {/* Кнопка переключения темы и навигация вынесены в Header */}
           </Box>
 
           <Box component="form" onSubmit={handleSubmit}>
@@ -57,6 +53,7 @@ export default function Login() {
               onChange={(e) => setUsername(e.target.value)}
               sx={{ mb: 2 }}
             />
+
             <TextField
               label="Пароль"
               type="password"
@@ -67,6 +64,7 @@ export default function Login() {
               onChange={(e) => setPassword(e.target.value)}
               sx={{ mb: 2 }}
             />
+
             {error && (
               <Alert severity="error" sx={{ mb: 2 }}>
                 {error}
@@ -84,12 +82,6 @@ export default function Login() {
           </Typography>
           <Typography variant="body2">admin / adminpass</Typography>
           <Typography variant="body2">user / userpass</Typography>
-
-          <Box sx={{ mt: 2 }}>
-            <Button component={Link} to="/" variant="text">
-              На главную
-            </Button>
-          </Box>
         </Paper>
       </Container>
     </>
